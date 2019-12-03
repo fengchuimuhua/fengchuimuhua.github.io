@@ -41,9 +41,18 @@ $ hexo deploy
 ```Java
 public class Hello {
   public static void main(String[] args) {
-    
+
   }
 }
 ```
+$$
+\begin{eqnarray}
+\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\
+\nabla\cdot\vec{B} &=& 0 \\
+\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\
+\nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
+\end{eqnarray}
+$$
+
 
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
