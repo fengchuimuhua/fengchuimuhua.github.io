@@ -45,17 +45,20 @@
   };
 </script>
 
-  <meta name="description" content="学习机器学习的感悟，希望你能喜欢">
-<meta name="keywords" content="Machine Learning, Deep Learning, Optimization">
-<meta property="og:type" content="website">
-<meta property="og:title" content="机器学习炼丹炉">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+  <meta name="description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？">
+<meta name="keywords" content="Model Selection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二）模型评估">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;04&#x2F;%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0&#x2F;index.html">
 <meta property="og:site_name" content="机器学习炼丹炉">
-<meta property="og:description" content="学习机器学习的感悟，希望你能喜欢">
+<meta property="og:description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
+<meta property="og:updated_time" content="2019-12-03T16:47:44.243Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
 
-<link rel="canonical" href="http://yoursite.com/archives/">
+<link rel="canonical" href="http://yoursite.com/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">
 
 
 <script id="page-configurations">
@@ -63,14 +66,14 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,700,700i|Noto+Serif+SC:400,500&display=swap" rel="stylesheet">
 
-  <title>Archive | 机器学习炼丹炉</title>
+  <title>（二）模型评估 | 机器学习炼丹炉</title>
   
 
 
@@ -165,93 +168,87 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 3 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ApolloZhang">
+      <meta itemprop="description" content="学习机器学习的感悟，希望你能喜欢">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="机器学习炼丹炉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （二）模型评估
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-04 00:44:11 / Modified: 00:47:44" itemprop="dateCreated datePublished" datetime="2019-12-04T00:44:11+08:00">2019-12-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-04T00:44:11+08:00"
-              content="2019-12-04">
-          12-04
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" itemprop="url">
-            <span itemprop="name">（二）模型评估</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-03T20:11:36+08:00"
-              content="2019-12-03">
-          12-03
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">（一）特征工程</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-03T12:10:04+08:00"
-              content="2019-12-03">
-          12-03
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/03/hello-world/" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+        <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？</p>
+<p><img src="/images/precision_recall_concept.png" alt=""></p>
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Model-Selection/" rel="tag"># Model Selection</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" rel="prev" title="（一）特征工程">
+      <i class="fa fa-chevron-left"></i> （一）特征工程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
         </div>
           
@@ -352,7 +349,7 @@
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
 <script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -375,9 +372,76 @@
   
 
   
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'c76442b5b87fd098f167',
+      clientSecret: '4d104900ad2de7236fe85e23e9c0b175aca3ed7b',
+      repo: 'fengchuimuhua.github.io',
+      owner: 'fengchuimuhua',
+      admin: ['fengchuimuhua'],
+      id: '0e6e773c90a78c8a5eee9c19700227ef',
+        language: 'zh-CN',
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>

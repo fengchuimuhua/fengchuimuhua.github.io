@@ -45,19 +45,18 @@
   };
 </script>
 
-  <meta name="keywords" content="Machine Learning, Deep Learning, Optimization">
+  <meta name="description" content="为什么要做特征工程？怎么做特征工程？本篇文章将会分享一下我在这方面的体会。不全，但会不断补充我对这一话题的认识与理解。 特征工程为什么要做特征工程？常用特征工程方法">
+<meta name="keywords" content="Feature Engineering, Feature Selection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="（一）特征选择与模型评估">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;03&#x2F;%E7%89%B9%E5%BE%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0&#x2F;index.html">
+<meta property="og:title" content="（一）特征工程">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;03&#x2F;%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B&#x2F;index.html">
 <meta property="og:site_name" content="机器学习炼丹炉">
+<meta property="og:description" content="为什么要做特征工程？怎么做特征工程？本篇文章将会分享一下我在这方面的体会。不全，但会不断补充我对这一话题的认识与理解。 特征工程为什么要做特征工程？常用特征工程方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;timg.jpeg">
-<meta property="og:updated_time" content="2019-12-03T16:26:16.280Z">
+<meta property="og:updated_time" content="2019-12-03T16:47:15.976Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
 
-<link rel="canonical" href="http://yoursite.com/2019/12/03/%E7%89%B9%E5%BE%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">
+<link rel="canonical" href="http://yoursite.com/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -72,7 +71,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,700,700i|Noto+Serif+SC:400,500&display=swap" rel="stylesheet">
 
-  <title>（一）特征选择与模型评估 | 机器学习炼丹炉</title>
+  <title>（一）特征工程 | 机器学习炼丹炉</title>
   
 
 
@@ -172,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/%E7%89%B9%E5%BE%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -185,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          （一）特征选择与模型评估
+          （一）特征工程
         </h1>
 
         <div class="post-meta">
@@ -202,7 +201,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-04 00:26:16" itemprop="dateModified" datetime="2019-12-04T00:26:16+08:00">2019-12-04</time>
+                <time title="Modified: 2019-12-04 00:47:15" itemprop="dateModified" datetime="2019-12-04T00:47:15+08:00">2019-12-04</time>
               </span>
 
           
@@ -216,8 +215,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/images/precision_recall_concept.png" alt=""><br><img src="/images/timg.jpeg" alt=""></p>
-
+        <p>为什么要做特征工程？怎么做特征工程？本篇文章将会分享一下我在这方面的体会。不全，但会不断补充我对这一话题的认识与理解。</p>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><h3 id="为什么要做特征工程？"><a href="#为什么要做特征工程？" class="headerlink" title="为什么要做特征工程？"></a>为什么要做特征工程？</h3><h3 id="常用特征工程方法"><a href="#常用特征工程方法" class="headerlink" title="常用特征工程方法"></a>常用特征工程方法</h3>
     </div>
 
     
@@ -225,6 +224,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Feature-Engineering-Feature-Selection/" rel="tag"># Feature Engineering, Feature Selection</a>
+          </div>
 
         
 
@@ -235,7 +237,10 @@
     <a href="/2019/12/03/hello-world/" rel="prev" title="Hello World">
       <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" rel="next" title="（二）模型评估">
+      （二）模型评估 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -274,6 +279,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">1.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要做特征工程？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要做特征工程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用特征工程方法"><span class="nav-number">1.2.</span> <span class="nav-text">常用特征工程方法</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -287,9 +293,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -432,7 +442,7 @@
       repo: 'fengchuimuhua.github.io',
       owner: 'fengchuimuhua',
       admin: ['fengchuimuhua'],
-      id: '8e651c404503ca2fabb17c5b2af91649',
+      id: 'e81aaec6d3744ff9578a068c8464e975',
         language: 'zh-CN',
       distractionFreeMode: 'true'
     });
