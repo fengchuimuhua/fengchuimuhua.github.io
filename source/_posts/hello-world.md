@@ -34,6 +34,8 @@ More info: [Generating](https://hexo.io/docs/generating.html)
 
 ### Deploy to remote sites
 
+您好，欢迎您
+
 ``` bash
 $ hexo deploy
 ```
