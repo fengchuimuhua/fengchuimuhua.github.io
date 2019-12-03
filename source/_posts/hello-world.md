@@ -38,4 +38,12 @@ More info: [Generating](https://hexo.io/docs/generating.html)
 $ hexo deploy
 ```
 
+```Java
+public class Hello {
+  public static void main(String[] args) {
+    
+  }
+}
+```
+
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
