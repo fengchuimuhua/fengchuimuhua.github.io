@@ -234,6 +234,21 @@
     
     
     
+        <div class="reward-container">
+  <div>如果觉得内容不错，请我喝杯朗姆酒吧！</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="张润丰 (ApolloZhang) 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -313,6 +328,14 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fengchuimuhua" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fengchuimuhua" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fengchuimuhua08@163.com" title="E-Mail → mailto:fengchuimuhua08@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -458,7 +481,12 @@
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
+
+  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <div id="aplayer"></div>
+  <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+  <script type="text/javascript" src="/dist/music.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
