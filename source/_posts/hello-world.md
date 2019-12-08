@@ -11,6 +11,27 @@ mathjax: true
 
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
+<div style="width: 200px; margin: auto">![树模型的特征空间划分](/images/trees/tree2.png)</div>
+![树模型的特征空间划分](/images/trees/tree2.png)
+
+<img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/>
+
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=3109733843&auto=1&height=430"></iframe>
+
+
+{% grouppicture 2-2 %}
+  !["树模型的树状描述结构"](/images/trees/tree1.png)
+  !["树模型的特征空间划分"](/images/trees/tree2.png)
+{% endgrouppicture %}
+<div class="image-caption" style="width: 200px; margin: 2 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
+
+
+<img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/>
+<div class="image-caption" style="width: 200px; margin: 0 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
+
+<img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/>
+<div class="image-caption" style="width: 200px; margin: 4 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
+
 ## Quick Start
 
 $$x^2+y^2=1$$
