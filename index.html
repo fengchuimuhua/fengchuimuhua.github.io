@@ -332,7 +332,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-09 20:40:02" itemprop="dateModified" datetime="2019-12-09T20:40:02+08:00">2019-12-09</time>
+                <time title="修改时间：2019-12-09 21:28:17" itemprop="dateModified" datetime="2019-12-09T21:28:17+08:00">2019-12-09</time>
               </span>
 
           
@@ -384,7 +384,10 @@
 </blockquote>
 </li>
 </ol>
-<h3 id="CART中的分类树"><a href="#CART中的分类树" class="headerlink" title="CART中的分类树"></a>CART中的分类树</h3><h3 id="CART中的回归树"><a href="#CART中的回归树" class="headerlink" title="CART中的回归树"></a>CART中的回归树</h3><h3 id="CART里的细节"><a href="#CART里的细节" class="headerlink" title="CART里的细节"></a>CART里的细节</h3><h2 id="CART与ID3、C4-5的对比"><a href="#CART与ID3、C4-5的对比" class="headerlink" title="CART与ID3、C4.5的对比"></a>CART与ID3、C4.5的对比</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: Friedman J, Hastie T, Tibshirani R. The elements of statistical learning[M]. New York: Springer series in statistics, 2001.<br>[2]: 李航. 统计学习方法[J]. 2019.<br>[3]: David S. Rosenberg. <a href="https://bloomberg.github.io" target="_blank" rel="noopener">https://bloomberg.github.io</a><br>[4]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
+<h3 id="CART中的回归树"><a href="#CART中的回归树" class="headerlink" title="CART中的回归树"></a>CART中的回归树</h3><p>CART算法用于回归问题最常见的是采用MSE（Mean Square Error，均方误差）Loss作为模型的损失函数，除此之外MAE（Mean Absolute Error，平均绝对误差）Loss也是比较常见的损失函数。假如CART采用MSE损失函数，那么对于结点$\mathcal{N}$，结点分裂需要考虑的：1. 选择什么特征进行分裂？2. 针对特征如何分裂？想回答这两个问题，最重要的是我们必须明确一次分裂能对模型提升什么。</p>
+<p>对于回归问题，回答刚才的那个问题比较简单，我们不妨这么看：对于结点$\mathcal{N}$，如果我们不继续分裂该结点，那么该结点上的loss为：</p>
+<script type="math/tex; mode=display">
+L(\mathcal{N}) =</script><h3 id="CART中的分类树"><a href="#CART中的分类树" class="headerlink" title="CART中的分类树"></a>CART中的分类树</h3><h3 id="漏掉的细节"><a href="#漏掉的细节" class="headerlink" title="漏掉的细节"></a>漏掉的细节</h3><h2 id="CART与ID3、C4-5的对比"><a href="#CART与ID3、C4-5的对比" class="headerlink" title="CART与ID3、C4.5的对比"></a>CART与ID3、C4.5的对比</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: Friedman J, Hastie T, Tibshirani R. The elements of statistical learning[M]. New York: Springer series in statistics, 2001.<br>[2]: 李航. 统计学习方法[J]. 2019.<br>[3]: David S. Rosenberg. <a href="https://bloomberg.github.io" target="_blank" rel="noopener">https://bloomberg.github.io</a><br>[4]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
 
       
     </div>
