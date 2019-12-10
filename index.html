@@ -170,6 +170,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -332,7 +333,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-10 14:21:31" itemprop="dateModified" datetime="2019-12-10T14:21:31+08:00">2019-12-10</time>
+                <time title="修改时间：2019-12-10 17:10:06" itemprop="dateModified" datetime="2019-12-10T17:10:06+08:00">2019-12-10</time>
               </span>
 
           
@@ -346,78 +347,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="树模型简介"><a href="#树模型简介" class="headerlink" title="树模型简介"></a>树模型简介</h2><p>树模型(Tree Model)或者说决策树模型(Decision Tree Model)可能是大家在入门机器学习时接触的最早的模型。它在监督学习(supervised learning) 的众多模型中，可以说是最符合人类思维的一种模型：通过一系列的“提问”，最终将这一样本点(sample)归到某个样本集合中去，再通过这一样本集合的共性特征去定义这一样本点的标签(label)。笔者记得很多年前，网络上流行这样的应用：你心中想一个名人明星，系统会给你提问若干问题，你只需要回答“是”、“不是”或者“不知道”即可，经过10+轮的提问，系统能够告诉你心之所想。其实，这个应用的背后就是一个针对名人明星的决策树，只不过这棵决策树不需要泛化能力，完全拟合训练集（名人明星样本）即可。</p>
-<p>上述提到的针对样本的“一系列提问”，实际上做的是将整个特征空间(feature space)划分成一个个不相交的矩形(rectangles)。更准确地说，在二维特征空间中是不相交的矩形（如下图1<sup><a href="#fn_1" id="reffn_1">1</a></sup>所示），而在高维空间中是不相交的高维立方体。将样本点归到这些不相交的集合的过程，如下图所示，可以用一种树形的方式描述，这也是模型被称为“树模型”的原因。</p>
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/trees/tree1.png" alt="&quot;树模型的树状描述结构&quot;"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/trees/tree2.png" alt="&quot;树模型的特征空间划分&quot;"></div></div></div></div>
-<div class="image-caption" style="margin: 6 auto;">
-  <span class="image-caption" style="margin: 4 auto ">图1：树模型的树状结构描述及特征空间划分</span>
-</div>
-
-<p>图2<sup><a href="#fn_1" id="reffn_1">1</a></sup>表示由决策树将<code>特征空间</code>划分为不相交的集合且在不同的特征空间子集上的取值，即模型的预测值。如果我们将整个<code>特征空间</code>用$\mathcal{R}$来表示，那么决策树会将整个空间划分为$\{\mathcal{R}_1, \mathcal{R}_2, … , \mathcal{R}_m\}$，其中任意$i\neq j$且$i,j \in {1, …, m}$满足$\mathcal{R}_i\bigcap\mathcal{R}_j=\emptyset$。</p>
-<p><img src="/images/trees/tree3.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/></p>
-<div class="image-caption" style="margin: 6 auto;">
-  <span class="image-caption" style="margin: 4 auto ">图2：树模型特征空间划分及其对应值</span>
-</div>
-
-<p>传统的机器学习参考书在介绍树模型时，一般采用的是列举<code>ID3</code>、<code>C4.5</code>和<code>CART</code>这几种树模型的算法。但是，笔者觉得看过一遍这几个算法的介绍，一直很难产生共鸣（这可能也与笔者之前没有真正动手实现一个树模型有关）。在深入阅读参考文献[1]和[3]后，笔者有了更深的感悟，这几种树模型其实核心的逻辑都很类似：我们没有办法暴力穷举去探索所有的<code>特征空间</code>的划分，只能够采用贪心策略(greedy strategy)寻找当下的一个最好的划分，而一旦我们划分好<code>特征空间</code>，确定每个特征子集合$\mathcal{R}_i$的值的方式都是近似的，这一点将在本文详细介绍。基于这样的认识，笔者认为也许对其中一种树模型详细探讨也许会有更多收获。这里我同参考文献[1]和[3]一样，选择<code>CART</code>算法进行详细介绍。工业界现在使用树模型很少会直接使用单棵的决策树拟合模型，而是会采用<code>Boosting</code>或者<code>Bagging</code>的方法，将很多很多树的结果“综合”一下，以得到更好的预测效果。<code>CART</code>的简洁以及既可以用于分类亦可用于回归也让<code>CART</code>成为<code>Boosting</code>和<code>Bagging</code>里广泛使用的基模型<sup><a href="#fn_2" id="reffn_2">2</a></sup>，所以也算是应用最广泛的树模型。</p>
-<blockquote id="fn_1">
-<sup>1</sup>. 图片摘自参考文献[1]中章节9.2 “Tree-Based Model”。<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
-</blockquote>
-<blockquote id="fn_2">
-<sup>2</sup>. 基模型的概念后续会介绍，这里结合上下文可以理解为“很多树”中的一棵。<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
-</blockquote>
-<h2 id="分类与回归树（Classfication-amp-Regression-Tree-CART-C-amp-RT）"><a href="#分类与回归树（Classfication-amp-Regression-Tree-CART-C-amp-RT）" class="headerlink" title="分类与回归树（Classfication &amp; Regression Tree, CART, C&amp;RT）"></a>分类与回归树（Classfication &amp; Regression Tree, CART, C&amp;RT）</h2><p>CART（部分材料中习惯简写为C&amp;RT）的全称是Classfication And Regression Tree（分类与回归树），顾名思义该算法即可用于<code>分类</code>又可用于<code>回归</code>。如同之前所述，我们无法用暴力穷举所有的特征空间的划分，只能够采用贪心的方法：我们假设样本特征维度为$d$，特征集合为$\{fea_1,fea_2,…,fea_d\}$，每次针对当前数据集合$\mathcal{D}_{curr}$找到最合适的划分特征${fea}_i$，并依据样本在特征${fea}_i$上的取值将其划分为<strong>两个</strong>数据子集$\mathcal{D}_{next1}$和$\mathcal{D}_{next2}$，然后再采用<code>递归</code>的方式处理$\mathcal{D}_{next1}$和$\mathcal{D}_{next2}$这两个数据子集，直到符合终止条件。上述描述既包含树模型训练的基本流程，也包含CART树相对于ID3、C4.5个性特征，具体如下：</p>
-<ol>
-<li><p>CART构建的是二叉树，而ID3、C4.5算法则会构建多叉树</p>
-<blockquote>
-<p>关于这一点可以参考Hastie在参考文献[1]中9.2节的介绍：采用二叉树能够避免在一次分裂时因为分支过多造成的数据子集$\mathcal{D}_{nexti}$数据量过少，从而减少过拟合的可能。这也是CART算法一个比较“聪明”的一种做法。针对无序的类别特征(categorical feature)，如何将数据集依该特征划分成两个数据子集，笔者将在本篇后续详细介绍。</p>
-</blockquote>
-</li>
-<li><p>CART在建树的每一层的数据划分时，会考虑所有特征集合</p>
-<blockquote>
-<p>ID3、C4.5算法在每次分裂时，如果当前结点上样本的特征集合为$\mathcal{FE}$，并且选择当前的分裂特征为${fea}_i$，那么可供该结点的子结点的进行分裂的特征集合为$\mathcal{FE}-{fea}_i$。但是，对于CART算法，每一个结点可分裂的特征集合都是原始的特征集合。用一种更好理解的方式解释这个问题：假设我们希望对朗姆酒是否好喝建立一个分类器，如果用ID3、C4.5算法构建决策树，那么“酒的颜色”这个特征我们只能够用在一次判断上。但是如果是用CART算法建立的决策树，则可能多次用该特征进行判断。</p>
-</blockquote>
-</li>
-<li><p>CART既可以用于分类问题，又可以用于回归问题</p>
-<blockquote>
-<p>这一点在前文中反复提到，在下文将会详细介绍CART分别处理分类问题和回归问题的方式。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="CART中的回归树"><a href="#CART中的回归树" class="headerlink" title="CART中的回归树"></a>CART中的回归树</h3><p>&#8194;&#8194;&#8194;&#8194;CART算法用于回归问题最常见的是采用MSE（Mean Square Error，均方误差）作为模型的损失函数，除此之外MAE（Mean Absolute Error，平均绝对误差）也是比较常见的损失函数。假如CART采用MSE损失函数，那么对于结点$\mathcal{N}$，结点分裂需要考虑的：1. 选择什么特征进行分裂？2. 针对特征如何分裂？想回答这两个问题，最重要的是我们必须明确一次分裂能对模型提升什么。</p>
-<p>&#8194;&#8194;&#8194;&#8194;对于回归问题，回答刚才的那个问题比较简单，我们不妨这么看：对于结点$\mathcal{N}$，如果我们不继续分裂该结点，那么该结点上的loss为：</p>
-<script type="math/tex; mode=display">
-L(\mathcal{N}) = \frac{1}{|\mathcal{N}|}\sum_{i, x_i\in\mathcal{N}}(x_i - c(\mathcal{N}))^2</script><p>其中，</p>
-<script type="math/tex; mode=display">
-c(\mathcal{N}) = avg_{x_i\in\mathcal{N}}(y_i)</script><p>&#8194;&#8194;&#8194;&#8194;上面的$c(\mathcal{N})$是按照MSE损失函数为结点计算出的预测值，大家很容易通过求导验证$L(\mathcal{N})$当$c(\mathcal{N})$取值为样本均值时，结点上的MSE最小。如果损失函数是MAE时，$c(\mathcal{N})$则取样本中位点值时，损失最小。关于这个结论，我想到的最简单的方法就是画出数轴，模拟切分点的移动观察损失函数的变化，从而得出结论。如果将结点$\mathcal{N}$根据特征${fea}_j$划分为两个子结点$\mathcal{N}_{left}$和$\mathcal{N}_{right}$：</p>
-<script type="math/tex; mode=display">
-\mathcal{N}_{left}({fea}_j, s)=\{ X \vert X_{fea_j} \leq s \}</script><script type="math/tex; mode=display">
-\mathcal{N}_{right}({fea}_j, s)=\{ X \vert X_{fea_j} > s \}</script><p>那么这两个子结点给出的预测值则分别为：</p>
-<script type="math/tex; mode=display">
-c(\mathcal{N}_{left}) = avg_{x_i\in\mathcal{N}_{left}}(y_i)</script><script type="math/tex; mode=display">
-c(\mathcal{N}_{right}) = avg_{x_i\in\mathcal{N}_{right}}(y_i)</script><p>这两个结点上的loss则分别为：</p>
-<script type="math/tex; mode=display">
-L(\mathcal{N}_{left}) = \frac{1}{|\mathcal{N}_{left}|}\sum_{i, x_i\in\mathcal{N}_{left}}(x_i - c(\mathcal{N}_{left}))^2</script><script type="math/tex; mode=display">
-L(\mathcal{N}_{right}) = \frac{1}{|\mathcal{N}_{right}|}\sum_{i, x_i\in\mathcal{N}_{right}}(x_i - c(\mathcal{N}_{right}))^2</script><p>&#8194;&#8194;&#8194;&#8194;一个很自然的想法就是，结点$\mathcal{N}$的loss与两个子结点的loss<code>加权和</code>的差为这次分裂所带来的收益。我们定义对于结点$\mathcal{N}$上关于特征的$fea_j$在取值$s$上分裂收益为$G(\mathcal{N}, fea_j, s)$，那么有：</p>
-<script type="math/tex; mode=display">
-G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mathcal{N}_{left}) + |\mathcal{N}_{right}|L(\mathcal{N}_{right}))</script><p>&#8194;&#8194;&#8194;&#8194;那么对于特征$fea_j$，我们如何找到最为合适的$s$？对于这个问题，一般采取的策略是将结点$\mathcal{N}$上的数据按照特征$fea_j$的值进行排序，每两个相邻的数据点的平均值$s_i = \frac{1}{2}(x_i+x_{i+1})$作为候选的分裂阈值，并依此评估分裂收益$G(\mathcal{N}, fea_j, s_i)$。这样对于每个特征$fea_j$都能够找到一个最大的收益$G(\mathcal{N}, fea_j)$。图3表示针对一个特征对数据进行排序，并遍历不同的分裂阈值$\{s_1,s_2,…,s_8\}$，并找到最合适的分裂阈值$s_4$。</p>
-<p><img src="/images/trees/tree4.png" width="90%" height="90%" border="0" style="margin: 0 auto;"/></p>
-<div class="image-caption" style="margin: 6 auto;">
-  <span class="image-caption" style="margin: 4 auto ">图3：寻找特征的最佳分裂阈值</span>
-</div>
-
-<p>&#8194;&#8194;&#8194;&#8194;针对一个特征$fea_j$，我们按照上述方法找到最合适的分裂阈值，并能够得到在该特征下的最大分裂收益$G(\mathcal{N}, fea_j)$。CART算法计算所有的特征下的最大分裂收益，并从中选择最大分裂收益最大值对应的特征进行分裂。<br>&#8194;&#8194;&#8194;&#8194;至此我们明白了在所有的特征值都为连续值的情况下，如何找到最合适的分裂特征以及对应的分裂阈值。那么，对于特征值是离散情况，我们如何处理呢？</p>
-<h3 id="CART中的分类树"><a href="#CART中的分类树" class="headerlink" title="CART中的分类树"></a>CART中的分类树</h3><h2 id="漏掉的细节"><a href="#漏掉的细节" class="headerlink" title="漏掉的细节"></a>漏掉的细节</h2><h2 id="CART与ID3、C4-5的对比"><a href="#CART与ID3、C4-5的对比" class="headerlink" title="CART与ID3、C4.5的对比"></a>CART与ID3、C4.5的对比</h2><p>CART与ID3、C4.5的对比在前文也陆陆续续地介绍了一些，这里总结一下：</p>
-<ul>
-<li>CART算法既能用于分类问题，又能用于回归问题；ID3、C4.5算法只能用于分类问题</li>
-<li>CART算法构建的树为二叉树；ID3、C4.5算法构建的是多叉树</li>
-<li>ID3只能处理特征值为离散特征的数据，C4.5算法能够处理连续值特征<sup><a href="#fn_3" id="reffn_3">3</a></sup>，CART算法既能处理离散特征又能处理连续特征</li>
-</ul>
-<blockquote id="fn_3">
-<sup>3</sup>. 不同文献介绍的内容存在差异，大致提到C4.5能够将连续特征值分段，但是是否采用与CART类似的排序二分目前还没搞清楚。<a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
-</blockquote>
-<h2 id="决策树的优缺点"><a href="#决策树的优缺点" class="headerlink" title="决策树的优缺点"></a>决策树的优缺点</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: Friedman J, Hastie T, Tibshirani R. The elements of statistical learning[M]. New York: Springer series in statistics, 2001.<br>[2]: 李航. 统计学习方法[J]. 2019.<br>[3]: David S. Rosenberg. <a href="https://bloomberg.github.io" target="_blank" rel="noopener">https://bloomberg.github.io</a><br>[4]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
-
+          <p>树模型(Tree Model)或者说决策树模型(Decision Tree Model)可能是大家在入门机器学习时接触的最早的模型。由于它的可解释性以及优异的模型效果，它的应用十分广泛。本文将从CART（分类与回归树）算法着手，对树模型算法进行详细地介绍与分析，涉及到不少大家平时不容易注意到的细节。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/05/%E7%AE%80%E5%8D%95%E6%A0%91%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -467,7 +405,7 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-05 19:19:49" itemprop="dateModified" datetime="2019-12-05T19:19:49+08:00">2019-12-05</time>
+                <time title="修改时间：2019-12-10 17:03:15" itemprop="dateModified" datetime="2019-12-10T17:03:15+08:00">2019-12-10</time>
               </span>
 
           
@@ -481,17 +419,15 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？</p>
-<h2 id="精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><a href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy" class="headerlink" title="精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)"></a>精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</h2><p><img src="/images/precision_recall_concept.png" alt=""><br>精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照上图理解这三个概念。</p>
-<p>在学校学习的时候或者在Coursera、Edx、学堂在线这些平台上看一些公开课的时候，用的比较多的是准确率(Accuracy)这个概念，但是本人在“算法工程师”的日常工作中，用到的更多的却是精确度(Precision)和召回率(Recall)这两个概念。这是为什么呢？我的理解如下：</p>
-<ol>
-<li><p>工业界实际数据与courses或者papers的数据集存在差异：在课程或者论文中的数据集，很大一部分都是样本均衡的数据集，因为我们focus在模型上，而非具体的数据，也不必完全贴近真实场景下的数据分布。举个具体的例子，我在学习深度学习图像识别的时候，评估CNN模型一般都是使用CIFA10或者ImageNet这样非常“标准”的数据集，CIFA10中包含10个类别（当然也确实没法直接使用精确度和召回率来评估，除非用one-vs-rest这种方法），每个类别下的样本个数基本一致，此时准确率(Accuracy)已经完全能够评估模型是好是坏。而在工业场景中，例如转化率预估场景，数据集的正负样本差异极大，这时候如果直接用准确率评估则毫无意义。假如点击率预估数据集中正样本比例为$0.2\%$，负样本比例为$99.8\%$，那么即使模型把所有的样本都预测为负，模型的准确率也能达到$99.8\%$。在这个场景下谈准确率意义不大。</p>
-</li>
-<li><p>模型的精确度、召回率亦或是准确率都和我们设置的阈值有关（模型会给出一个待预测sample为正的概率，最终判断该样本为正为负通过判断概率值与阈值的大小关系进行），在工业界中一般都会结合具体业务场景去决策阈值的设置：比如一个人脸身份验证系统，我们往往需要保证系统的可靠性，这时候往往需要通过设置较高的阈值，保证“验证通过”这样的正样本具有很高的精确度。再比如，如果你要设计一个自动识别bug的系统，这时候对系统的要求则可能是尽可能找到所有的bug，此时需要设置相对较低的阈值以保证识别结果的高召回。</p>
-</li>
-</ol>
-<p>我自己在日常“算法工程师”的工作中，一般的工作流程是，对训练好的模型画出它的PR曲线（下面将会介绍），结合业务需要在这个PR曲线上找到一个合适的点（即确定阈值），评估模型的准确率使用相对低频。</p>
-<h2 id="PR曲线和Roc曲线"><a href="#PR曲线和Roc曲线" class="headerlink" title="PR曲线和Roc曲线"></a>PR曲线和Roc曲线</h2><h3 id="PR曲线"><a href="#PR曲线" class="headerlink" title="PR曲线"></a>PR曲线</h3><h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3>
+          <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -541,7 +477,7 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-05 19:20:02" itemprop="dateModified" datetime="2019-12-05T19:20:02+08:00">2019-12-05</time>
+                <time title="修改时间：2019-12-10 16:56:43" itemprop="dateModified" datetime="2019-12-10T16:56:43+08:00">2019-12-10</time>
               </span>
 
           
@@ -557,7 +493,14 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
       
           <p><img src="/images/moutain.jpg" alt=""></p>
 <p>为什么要做特征工程？怎么做特征工程？本篇文章将会分享一下我在这方面的体会。不全，但会不断补充我对这一话题的认识与理解。</p>
-<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><h3 id="为什么要做特征工程？"><a href="#为什么要做特征工程？" class="headerlink" title="为什么要做特征工程？"></a>为什么要做特征工程？</h3><h3 id="常用特征工程方法"><a href="#常用特征工程方法" class="headerlink" title="常用特征工程方法"></a>常用特征工程方法</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -607,7 +550,7 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-09 09:38:24" itemprop="dateModified" datetime="2019-12-09T09:38:24+08:00">2019-12-09</time>
+                <time title="修改时间：2019-12-10 17:08:58" itemprop="dateModified" datetime="2019-12-10T17:08:58+08:00">2019-12-10</time>
               </span>
 
           
@@ -622,42 +565,15 @@ G(\mathcal{N}, fea_j, s)=|\mathcal{N}|L(\mathcal{N})-(|\mathcal{N}_{left}|L(\mat
 
       
           <p><img src="/images/philly-magic-garden.jpg" alt=""></p>
-<p>这一块无需多说，直接看下面的使用方法即可。几个重点用法</p>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<div style="width: 200px; margin: auto">![树模型的特征空间划分](/images/trees/tree2.png)</div>
-![树模型的特征空间划分](/images/trees/tree2.png)
-
-<img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/>
-
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=3109733843&auto=1&height=430"></iframe>
-
-
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/trees/tree1.png" alt="&quot;树模型的树状描述结构&quot;"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/trees/tree2.png" alt="&quot;树模型的特征空间划分&quot;"></div></div></div></div>
-<div class="image-caption" style="width: 200px; margin: 2 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
-
-
-<p><img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/></p>
-<div class="image-caption" style="width: 200px; margin: 0 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
-
-<p><img src="/images/trees/tree2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/></p>
-<div class="image-caption" style="width: 200px; margin: 4 auto;"><span class="image-caption" style="color: #222; margin: 0 auto ">图片：树模型</span></div>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><script type="math/tex; mode=display">x^2+y^2=1</script><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-<script type="math/tex; mode=display">
-\begin{eqnarray}
-\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\
-\nabla\cdot\vec{B} &=& 0 \\
-\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\
-\nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
-\end{eqnarray}</script><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+<p>这一块无需多说，与大家学习LaTex一样，结合着下面的例子来看吧！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/01/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

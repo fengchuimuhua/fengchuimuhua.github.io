@@ -45,16 +45,16 @@
   };
 </script>
 
-  <meta name="description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？ 精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类">
+  <meta name="description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。">
 <meta name="keywords" content="Model Evaluation,模型评估">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（二）模型评估">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;04&#x2F;%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0&#x2F;index.html">
 <meta property="og:site_name" content="机器学习炼丹炉">
-<meta property="og:description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？ 精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类">
+<meta property="og:description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
-<meta property="og:updated_time" content="2019-12-05T11:19:49.610Z">
+<meta property="og:updated_time" content="2019-12-10T09:03:15.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;precision_recall_concept.png">
 
@@ -173,6 +173,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -218,7 +219,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-05 19:19:49" itemprop="dateModified" datetime="2019-12-05T19:19:49+08:00">2019-12-05</time>
+                <time title="修改时间：2019-12-10 17:03:15" itemprop="dateModified" datetime="2019-12-10T17:03:15+08:00">2019-12-10</time>
               </span>
 
           
@@ -232,7 +233,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？</p>
+        <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。</p>
+<a id="more"></a>
 <h2 id="精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><a href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy" class="headerlink" title="精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)"></a>精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</h2><p><img src="/images/precision_recall_concept.png" alt=""><br>精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照上图理解这三个概念。</p>
 <p>在学校学习的时候或者在Coursera、Edx、学堂在线这些平台上看一些公开课的时候，用的比较多的是准确率(Accuracy)这个概念，但是本人在“算法工程师”的日常工作中，用到的更多的却是精确度(Precision)和召回率(Recall)这两个概念。这是为什么呢？我的理解如下：</p>
 <ol>
