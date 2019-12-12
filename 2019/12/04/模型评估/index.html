@@ -55,7 +55,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr2.png">
-<meta property="og:updated_time" content="2019-12-12T13:02:46.195Z">
+<meta property="og:updated_time" content="2019-12-12T13:09:25.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 
@@ -221,7 +221,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-12 21:02:46" itemprop="dateModified" datetime="2019-12-12T21:02:46+08:00">2019-12-12</time>
+                <time title="修改时间：2019-12-12 21:09:25" itemprop="dateModified" datetime="2019-12-12T21:09:25+08:00">2019-12-12</time>
               </span>
 
           
@@ -249,7 +249,7 @@
   <span class="image-caption" style="margin: 4 auto ">图1：精确度、召回率和准确率</span>
 </div>
 
-<p>&#8194;&#8194;&#8194;&#8194;精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照上图理解这三个概念。</p>
+<p>&#8194;&#8194;&#8194;&#8194;精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照图1理解这三个概念。</p>
 <p>&#8194;&#8194;&#8194;&#8194;在学校学习的时候或者在Coursera、Edx、学堂在线这些平台上看一些公开课的时候，用的比较多的是准确率(Accuracy)这个概念，但是本人在“算法工程师”的日常工作中，用到的更多的却是精确度(Precision)和召回率(Recall)这两个概念。这是为什么呢？我的理解如下：</p>
 <ol>
 <li><p>工业界实际数据与courses或者papers的数据集存在差异：在课程或者论文中的数据集，很大一部分都是样本均衡的数据集，因为我们focus在模型上，而非具体的数据，也不必完全贴近真实场景下的数据分布。举个具体的例子，我在学习深度学习图像识别的时候，评估CNN模型一般都是使用CIFA10或者ImageNet这样非常“标准”的数据集，CIFA10中包含10个类别（当然也确实没法直接使用精确度和召回率来评估，除非用one-vs-rest这种方法），每个类别下的样本个数基本一致，此时准确率(Accuracy)已经完全能够评估模型是好是坏。而在工业场景中，例如转化率预估场景，数据集的正负样本差异极大，这时候如果直接用准确率评估则毫无意义。假如点击率预估数据集中正样本比例为$0.2\%$，负样本比例为$99.8\%$，那么即使模型把所有的样本都预测为负，模型的准确率也能达到$99.8\%$。在这个场景下谈准确率意义不大。</p>
@@ -259,14 +259,17 @@
 </ol>
 <p>&#8194;&#8194;&#8194;&#8194;我自己在日常“算法工程师”的工作中，一般的工作流程是，对训练好的模型画出它的PR曲线（下面将会介绍），结合业务需要在这个PR曲线上找到一个合适的点（即确定阈值），评估模型的准确率使用相对低频。</p>
 <h2 id="PR曲线和Roc曲线"><a href="#PR曲线和Roc曲线" class="headerlink" title="PR曲线和Roc曲线"></a>PR曲线和Roc曲线</h2><h3 id="PR曲线"><a href="#PR曲线" class="headerlink" title="PR曲线"></a>PR曲线</h3><p>&#8194;&#8194;&#8194;&#8194;PR曲线的全称是Precision-Recall曲线，顾名思义组成该曲线的点的坐标由<code>召回率</code>和<code>精确率</code>组成。在学习的逻辑斯蒂回归(Logistic Regression)时，我们知道逻辑斯蒂函数（Logistic Function，函数形式为$f(x)=\frac{1}{1+e^{-x}}$）将会计算出一个位于$(0,1)$区间之内的值，并且将该值作为样本归属正样本集的概率值$p(x=1)$。但正如前文所说，我们要视情况决定我们采取什么样的<code>判断阈值</code>threshold（当$p(x)\geq threshold$时，将样本预测为正样本，反之当$p(x)&lt;threshold$时，将样本预测为负样本）。所以，我们需要看模型在不同的阈值下的精确和召回情况。PR曲线一般以召回率作为横轴，精确率作为纵轴绘制，刻画出模型在不同的召回情况下的精确程度。</p>
-<p>&#8194;&#8194;&#8194;&#8194;PR曲线一方面让模型在不同召回率下的精确度一眼就看出来，另一方面使得模型对比更加充分。图中包含模型A和模型B两个模型的准召曲线，可以看出当召回比较少时模型B的精确度能达到1.0，要与模型A在召回较少时的精确度。但当召回较大时模型B的精确度指标却弱于模型A。这说明仅仅取一个$(precision, recall)$点来评估模型是不够的，从PR曲线分析模型更能全面了解模型在不同的召回下的表现。</p>
+<p>&#8194;&#8194;&#8194;&#8194;PR曲线一方面让模型在不同召回率下的精确度一眼就看出来，另一方面使得模型对比更加充分。图2<sup><a href="#fn_1" id="reffn_1">1</a></sup>中包含模型A和模型B两个模型的准召曲线，可以看出当召回比较少时模型B的精确度能达到1.0，要与模型A在召回较少时的精确度。但当召回较大时模型B的精确度指标却弱于模型A。这说明仅仅取一个$(precision, recall)$点来评估模型是不够的，从PR曲线分析模型更能全面了解模型在不同的召回下的表现。</p>
 <p><img src="/images/pr/pr2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/></p>
 <div class="image-caption" style="margin: 6 auto;">
   <span class="image-caption" style="margin: 4 auto ">图2：两个模型的准召曲线</span>
 </div>
 
+<blockquote id="fn_1">
+<sup>1</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
 
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3>
     </div>
 
     
@@ -362,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><span class="nav-number">1.</span> <span class="nav-text">精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PR曲线和Roc曲线"><span class="nav-number">2.</span> <span class="nav-text">PR曲线和Roc曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PR曲线"><span class="nav-number">2.1.</span> <span class="nav-text">PR曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC曲线"><span class="nav-number">2.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候用PR曲线，什么时候用ROC曲线？"><span class="nav-number">2.3.</span> <span class="nav-text">什么时候用PR曲线，什么时候用ROC曲线？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><span class="nav-number">1.</span> <span class="nav-text">精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PR曲线和Roc曲线"><span class="nav-number">2.</span> <span class="nav-text">PR曲线和Roc曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PR曲线"><span class="nav-number">2.1.</span> <span class="nav-text">PR曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC曲线"><span class="nav-number">2.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候用PR曲线，什么时候用ROC曲线？"><span class="nav-number">2.3.</span> <span class="nav-text">什么时候用PR曲线，什么时候用ROC曲线？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -571,9 +574,10 @@
 </script>
 
 
-  <link rel="stylesheet" href="/dist/APlayer.min.css">
+  <!-- 删掉注释后首页左下角有音乐播放器 -->
+  <!-- <link rel="stylesheet" href="/dist/APlayer.min.css">
   <div id="aplayer"></div>
   <script type="text/javascript" src="/dist/APlayer.min.js"></script>
-  <script type="text/javascript" src="/dist/music.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/dist/music.js"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
