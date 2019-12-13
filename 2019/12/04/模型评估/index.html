@@ -50,12 +50,18 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="（二）模型评估">
 <meta property="og:url" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;2019&#x2F;12&#x2F;04&#x2F;%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0&#x2F;index.html">
-<meta property="og:site_name" content="机器学习笔记">
+<meta property="og:site_name" content="机器学习深度笔记">
 <meta property="og:description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr2.png">
-<meta property="og:updated_time" content="2019-12-12T13:09:25.974Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr3.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr5.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr6.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr7.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr8.png">
+<meta property="og:updated_time" content="2019-12-13T08:41:27.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 
@@ -74,7 +80,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,700,700i|Noto+Serif+SC:400,500&display=swap" rel="stylesheet">
 
-  <title>（二）模型评估 | 机器学习笔记</title>
+  <title>（二）模型评估 | 机器学习深度笔记</title>
   
 
 
@@ -118,7 +124,7 @@
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">机器学习笔记</span>
+        <span class="site-title">机器学习深度笔记</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -200,7 +206,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="机器学习笔记">
+      <meta itemprop="name" content="机器学习深度笔记">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -221,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-12 21:09:25" itemprop="dateModified" datetime="2019-12-12T21:09:25+08:00">2019-12-12</time>
+                <time title="修改时间：2019-12-13 16:41:27" itemprop="dateModified" datetime="2019-12-13T16:41:27+08:00">2019-12-13</time>
               </span>
 
           
@@ -260,7 +266,7 @@
 <p>&#8194;&#8194;&#8194;&#8194;我自己在日常“算法工程师”的工作中，一般的工作流程是，对训练好的模型画出它的PR曲线（下面将会介绍），结合业务需要在这个PR曲线上找到一个合适的点（即确定阈值），评估模型的准确率使用相对低频。</p>
 <h2 id="PR曲线和Roc曲线"><a href="#PR曲线和Roc曲线" class="headerlink" title="PR曲线和Roc曲线"></a>PR曲线和Roc曲线</h2><h3 id="PR曲线"><a href="#PR曲线" class="headerlink" title="PR曲线"></a>PR曲线</h3><p>&#8194;&#8194;&#8194;&#8194;PR曲线的全称是Precision-Recall曲线，顾名思义组成该曲线的点的坐标由<code>召回率</code>和<code>精确率</code>组成。在学习的逻辑斯蒂回归(Logistic Regression)时，我们知道逻辑斯蒂函数（Logistic Function，函数形式为$f(x)=\frac{1}{1+e^{-x}}$）将会计算出一个位于$(0,1)$区间之内的值，并且将该值作为样本归属正样本集的概率值$p(x=1)$。但正如前文所说，我们要视情况决定我们采取什么样的<code>判断阈值</code>threshold（当$p(x)\geq threshold$时，将样本预测为正样本，反之当$p(x)&lt;threshold$时，将样本预测为负样本）。所以，我们需要看模型在不同的阈值下的精确和召回情况。PR曲线一般以召回率作为横轴，精确率作为纵轴绘制，刻画出模型在不同的召回情况下的精确程度。</p>
 <p>&#8194;&#8194;&#8194;&#8194;PR曲线一方面让模型在不同召回率下的精确度一眼就看出来，另一方面使得模型对比更加充分。图2<sup><a href="#fn_1" id="reffn_1">1</a></sup>中包含模型A和模型B两个模型的准召曲线，可以看出当召回比较少时模型B的精确度能达到1.0，要与模型A在召回较少时的精确度。但当召回较大时模型B的精确度指标却弱于模型A。这说明仅仅取一个$(precision, recall)$点来评估模型是不够的，从PR曲线分析模型更能全面了解模型在不同的召回下的表现。</p>
-<p><img src="/images/pr/pr2.png" width="50%" height="50%" border="0" style="margin: 0 auto;"/></p>
+<p><img src="/images/pr/pr2.png" width="70%" height="70%" border="0" style="margin: 0 auto;"/></p>
 <div class="image-caption" style="margin: 6 auto;">
   <span class="image-caption" style="margin: 4 auto ">图2：两个模型的准召曲线</span>
 </div>
@@ -268,7 +274,36 @@
 <blockquote id="fn_1">
 <sup>1</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
 </blockquote>
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>&#8194;&#8194;&#8194;&#8194;ROC曲线的全称是<code>受试者工作特征曲线</code>(Receiver Operating Characteristic Curve)，它的横轴是<code>假阳性率</code>(False Positive Ratio, FPR)，纵轴为<code>真阳性率</code>(True Positive Ratio, TPR)。所谓假阳性率是指被分类器预测为正样本但实际上是负样本的个数占总体负样本个数的比例，而真阳性率则表示被分类器预测为正样本且实际是正样本的个数占总体正样本个数的比例。为了便于理解，大家可以借助图1来理解，<code>真阳性率</code>为$\frac{TP}{TP+FN}$，实际上就是我们PR曲线的召回率，<code>假阳性率</code>为$\frac{FP}{FP+TN}$。绘制ROC曲线和绘制PR曲线一样，通过给模型设定不同的阈值，得到不同的$(FPR,TPR)$的坐标点，进而绘制出ROC曲线。图3<sup><a href="#fn_2" id="reffn_2">2</a></sup>即为根据该方法绘制而成的ROC曲线。</p>
+<p><img src="/images/pr/pr3.png" width="70%" height="70%" border="0" style="margin: 0 auto;"/></p>
+<div class="image-caption" style="margin: 6 auto;">
+  <span class="image-caption" style="margin: 4 auto ">图3：模型的ROC曲线</span>
+</div>
+
+<blockquote id="fn_2">
+<sup>2</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
+</blockquote>
+<h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3><p>&#8194;&#8194;&#8194;&#8194;为了回答这个问题，大家需要知道ROC曲线的一个重要的性质：当验证集的正负样本比例发生变化时，ROC曲线的形状能够基本保持不变。PR曲线在这样的情况下曲线变化比较剧烈。图4<sup><a href="#fn_3" id="reffn_3">3</a></sup>中，在验证集的正负样本比发生剧烈变化时，模型A和模型B的ROC曲线基本保持一致，但PR曲线变化则非常明显：</p>
+<p><img src="/images/pr/pr4.png" width="100%" height="100%" border="0" style="margin: 0 auto;"/></p>
+<div class="image-caption" style="margin: 6 auto;">
+  <span class="image-caption" style="margin: 4 auto ">图4：不同样本比下的ROC曲线和PR曲线</span>
+</div>
+
+<p>&#8194;&#8194;&#8194;&#8194;笔者在日常工作中训练的模型在评估时也印证了这一点，图5中第一排两张图片表示模型在两个不同正负样本比的验证集下的PR曲线：虽然曲线的形状近似，但是观察坐标轴的刻度可以看出两条曲线的差异较为明显；而图5第二排的两张图片表示模型在这两个验证集下的ROC曲线：曲线无论从形状还是点的取值来说，基本上保持一致。</p>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/pr/pr5.png" alt=""></div><div class="group-picture-column" style="width: 50%;"><img src="/images/pr/pr6.png" alt=""></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/pr/pr7.png" alt=""></div><div class="group-picture-column" style="width: 50%;"><img src="/images/pr/pr8.png" alt=""></div></div></div></div>
+<div class="image-caption" style="margin: 6 auto;">
+  <span class="image-caption" style="margin: 4 auto ">图5：不同验证集上的ROC曲线和PR曲线</span>
+</div>
+
+<p>因此，我们可以得到这样的结论：</p>
+<blockquote>
+<p>当我们需要评估模型在不同验证集上的效果，尤其是样本比差异较大的验证集上，选择ROC能够得到更加稳定的效果<br>当我们需要仔细地观察模型在某个特定验证集上的效果，选择PR曲线更加合适，因为PR曲线相对更加直观</p>
+</blockquote>
+<p>&#8194;&#8194;&#8194;&#8194;这里顺便提一句，我们称ROC曲线下的面积值为<code>AUC</code>，也即对ROC曲线在$(0,1)$上求积分得到的结果。AUC是一个量化衡量ROC曲线好坏的标准，它的取值在区间$(0.5,1)$。AUC值越大，模型的效果越好。</p>
+<blockquote id="fn_3">
+<sup>3</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_3" title="Jump back to footnote [3] in the text."> &#8617;</a>
+</blockquote>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
 
     </div>
 
