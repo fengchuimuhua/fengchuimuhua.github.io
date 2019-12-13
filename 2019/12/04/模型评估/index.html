@@ -48,7 +48,7 @@
   <meta name="description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。">
 <meta name="keywords" content="Model Evaluation,模型评估">
 <meta property="og:type" content="article">
-<meta property="og:title" content="（二）模型评估">
+<meta property="og:title" content="（二）模型评估 (Model Evaluation)">
 <meta property="og:url" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;2019&#x2F;12&#x2F;04&#x2F;%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0&#x2F;index.html">
 <meta property="og:site_name" content="机器学习深度笔记">
 <meta property="og:description" content="如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。">
@@ -61,7 +61,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr6.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr7.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr8.png">
-<meta property="og:updated_time" content="2019-12-13T08:41:27.701Z">
+<meta property="og:updated_time" content="2019-12-13T09:22:31.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 
@@ -80,7 +80,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,700,700i|Noto+Serif+SC:400,500&display=swap" rel="stylesheet">
 
-  <title>（二）模型评估 | 机器学习深度笔记</title>
+  <title>（二）模型评估 (Model Evaluation) | 机器学习深度笔记</title>
   
 
 
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          （二）模型评估
+          （二）模型评估 (Model Evaluation)
         </h1>
 
         <div class="post-meta">
@@ -227,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-13 16:41:27" itemprop="dateModified" datetime="2019-12-13T16:41:27+08:00">2019-12-13</time>
+                <time title="修改时间：2019-12-13 17:22:31" itemprop="dateModified" datetime="2019-12-13T17:22:31+08:00">2019-12-13</time>
               </span>
 
           
@@ -248,14 +248,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。</p>
+        <p><img src="/images/pr/pr1.png" alt=""><br>如何评估一个模型是好是坏？在分类问题中，我们最常听说的PR曲线是什么？我们听到的Roc曲线又是什么呢？到底我们是该用Roc曲线还是PR曲线去衡量一个二分类模型的好坏呢？本文在介绍模型评估的基本概念的同时，也将回答上述问题。</p>
 <a id="more"></a>
-<h2 id="精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><a href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy" class="headerlink" title="精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)"></a>精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</h2><p><img src="/images/pr/pr1.png" alt=""></p>
-<div class="image-caption" style="margin: 6 auto;">
-  <span class="image-caption" style="margin: 4 auto ">图1：精确度、召回率和准确率</span>
-</div>
-
-<p>&#8194;&#8194;&#8194;&#8194;精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照图1理解这三个概念。</p>
+<h2 id="精确度-Precision-、召回率-Recall-与-准确率-Accuracy"><a href="#精确度-Precision-、召回率-Recall-与-准确率-Accuracy" class="headerlink" title="精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)"></a>精确度(Precision)、召回率(Recall) 与 准确率(Accuracy)</h2><p>&#8194;&#8194;&#8194;&#8194;精确度(Precision)和召回率(Recall)用来评估二分类模型，精确度(Accuracy)既可以用来评估二分类模型的效果，也可以评估多分类模型。其中，精确度(Precision)的定义为：$Precision=\frac{TP}{TP+FP}$，也就是我们用训练好的二分类模型判断出数据集（这里的数据集指验证集，专门用来评估模型是好是坏的带有label的数据集）的正样本中真实的正样本所占的比例。召回率(Recall)的定义为：$Recall=\frac{TP}{TP+FN}$，也就是模型分类结果中标为正样本的sample个数占数据集中真实正样本个数的比例。准确率(Accuracy)的概念相对更加直接：$Accuracy=\frac{TP+TN}{TP+TN+FP+FN}$，也就是说分类器对数据集分类正确的样本占样本全集的比例。大家也可以参照封面图理解这三个概念。</p>
 <p>&#8194;&#8194;&#8194;&#8194;在学校学习的时候或者在Coursera、Edx、学堂在线这些平台上看一些公开课的时候，用的比较多的是准确率(Accuracy)这个概念，但是本人在“算法工程师”的日常工作中，用到的更多的却是精确度(Precision)和召回率(Recall)这两个概念。这是为什么呢？我的理解如下：</p>
 <ol>
 <li><p>工业界实际数据与courses或者papers的数据集存在差异：在课程或者论文中的数据集，很大一部分都是样本均衡的数据集，因为我们focus在模型上，而非具体的数据，也不必完全贴近真实场景下的数据分布。举个具体的例子，我在学习深度学习图像识别的时候，评估CNN模型一般都是使用CIFA10或者ImageNet这样非常“标准”的数据集，CIFA10中包含10个类别（当然也确实没法直接使用精确度和召回率来评估，除非用one-vs-rest这种方法），每个类别下的样本个数基本一致，此时准确率(Accuracy)已经完全能够评估模型是好是坏。而在工业场景中，例如转化率预估场景，数据集的正负样本差异极大，这时候如果直接用准确率评估则毫无意义。假如点击率预估数据集中正样本比例为$0.2\%$，负样本比例为$99.8\%$，那么即使模型把所有的样本都预测为负，模型的准确率也能达到$99.8\%$。在这个场景下谈准确率意义不大。</p>
@@ -274,7 +269,7 @@
 <blockquote id="fn_1">
 <sup>1</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
 </blockquote>
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>&#8194;&#8194;&#8194;&#8194;ROC曲线的全称是<code>受试者工作特征曲线</code>(Receiver Operating Characteristic Curve)，它的横轴是<code>假阳性率</code>(False Positive Ratio, FPR)，纵轴为<code>真阳性率</code>(True Positive Ratio, TPR)。所谓假阳性率是指被分类器预测为正样本但实际上是负样本的个数占总体负样本个数的比例，而真阳性率则表示被分类器预测为正样本且实际是正样本的个数占总体正样本个数的比例。为了便于理解，大家可以借助图1来理解，<code>真阳性率</code>为$\frac{TP}{TP+FN}$，实际上就是我们PR曲线的召回率，<code>假阳性率</code>为$\frac{FP}{FP+TN}$。绘制ROC曲线和绘制PR曲线一样，通过给模型设定不同的阈值，得到不同的$(FPR,TPR)$的坐标点，进而绘制出ROC曲线。图3<sup><a href="#fn_2" id="reffn_2">2</a></sup>即为根据该方法绘制而成的ROC曲线。</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>&#8194;&#8194;&#8194;&#8194;ROC曲线的全称是<code>受试者工作特征曲线</code>(Receiver Operating Characteristic Curve)，它的横轴是<code>假阳性率</code>(False Positive Ratio, FPR)，纵轴为<code>真阳性率</code>(True Positive Ratio, TPR)。所谓假阳性率是指被分类器预测为正样本但实际上是负样本的个数占总体负样本个数的比例，而真阳性率则表示被分类器预测为正样本且实际是正样本的个数占总体正样本个数的比例。为了便于理解，大家可以借助封面图来理解，<code>真阳性率</code>为$\frac{TP}{TP+FN}$，实际上就是我们PR曲线的召回率，<code>假阳性率</code>为$\frac{FP}{FP+TN}$。绘制ROC曲线和绘制PR曲线一样，通过给模型设定不同的阈值，得到不同的$(FPR,TPR)$的坐标点，进而绘制出ROC曲线。图3<sup><a href="#fn_2" id="reffn_2">2</a></sup>即为根据该方法绘制而成的ROC曲线。</p>
 <p><img src="/images/pr/pr3.png" width="70%" height="70%" border="0" style="margin: 0 auto;"/></p>
 <div class="image-caption" style="margin: 6 auto;">
   <span class="image-caption" style="margin: 4 auto ">图3：模型的ROC曲线</span>
@@ -334,7 +329,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="/https:/fengchuimuhua.github.io/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" title="（二）模型评估">https://fengchuimuhua.github.io/2019/12/04/模型评估/</a>
+    <a href="/https:/fengchuimuhua.github.io/2019/12/04/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" title="（二）模型评估 (Model Evaluation)">https://fengchuimuhua.github.io/2019/12/04/模型评估/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -355,12 +350,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" rel="prev" title="（一）特征工程">
-      <i class="fa fa-chevron-left"></i> （一）特征工程
+    <a href="/2019/12/03/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" rel="prev" title="（一）特征工程 (Feature Engineering)">
+      <i class="fa fa-chevron-left"></i> （一）特征工程 (Feature Engineering)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/12/05/%E7%AE%80%E5%8D%95%E6%A0%91%E6%A8%A1%E5%9E%8B/" rel="next" title="（三）树模型(Decision Trees)">
-      （三）树模型(Decision Trees) <i class="fa fa-chevron-right"></i>
+    <a href="/2019/12/05/%E7%AE%80%E5%8D%95%E6%A0%91%E6%A8%A1%E5%9E%8B/" rel="next" title="（三）树模型 (Decision Trees)">
+      （三）树模型 (Decision Trees) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
