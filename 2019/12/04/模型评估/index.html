@@ -55,7 +55,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr2.png">
-<meta property="og:updated_time" content="2019-12-13T08:06:48.688Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr3.png">
+<meta property="og:updated_time" content="2019-12-13T08:10:59.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;fengchuimuhua.github.io&#x2F;images&#x2F;pr&#x2F;pr1.png">
 
@@ -221,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-13 16:06:48" itemprop="dateModified" datetime="2019-12-13T16:06:48+08:00">2019-12-13</time>
+                <time title="修改时间：2019-12-13 16:10:59" itemprop="dateModified" datetime="2019-12-13T16:10:59+08:00">2019-12-13</time>
               </span>
 
           
@@ -268,7 +269,15 @@
 <blockquote id="fn_1">
 <sup>1</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
 </blockquote>
-<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>&#8194;&#8194;&#8194;&#8194;ROC曲线的全称是<code>受试者工作特征曲线</code>(Receiver Operating Characteristic Curve)，它的横轴是<code>假阳性率</code>(False Positive Ratio, FPR)，纵轴为<code>真阳性率</code>(True Positive Ratio, TPR)。所谓假阳性率是指被分类器预测为正样本但实际上是负样本的个数占总体负样本个数的比例，而真阳性率则表示被分类器预测为正样本且实际是正样本的个数占总体正样本个数的比例。为了便于理解，大家可以借助图1来理解，<code>真阳性率</code>为$\frac{TP}{TP+FN}$，实际上就是我们PR曲线的召回率，<code>假阳性率</code>为$\frac{FP}{FP+TN}$。绘制ROC曲线和绘制PR曲线一样，通过给模型设定不同的阈值，得到不同的$(FPR,TPR)$的坐标点，进而绘制出ROC曲线。</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p>&#8194;&#8194;&#8194;&#8194;ROC曲线的全称是<code>受试者工作特征曲线</code>(Receiver Operating Characteristic Curve)，它的横轴是<code>假阳性率</code>(False Positive Ratio, FPR)，纵轴为<code>真阳性率</code>(True Positive Ratio, TPR)。所谓假阳性率是指被分类器预测为正样本但实际上是负样本的个数占总体负样本个数的比例，而真阳性率则表示被分类器预测为正样本且实际是正样本的个数占总体正样本个数的比例。为了便于理解，大家可以借助图1来理解，<code>真阳性率</code>为$\frac{TP}{TP+FN}$，实际上就是我们PR曲线的召回率，<code>假阳性率</code>为$\frac{FP}{FP+TN}$。绘制ROC曲线和绘制PR曲线一样，通过给模型设定不同的阈值，得到不同的$(FPR,TPR)$的坐标点，进而绘制出ROC曲线。图3<sup><a href="#fn_2" id="reffn_2">2</a></sup>即为根据该方法绘制而成的ROC曲线。</p>
+<p><img src="/images/pr/pr3.png" width="70%" height="70%" border="0" style="margin: 0 auto;"/></p>
+<div class="image-caption" style="margin: 6 auto;">
+  <span class="image-caption" style="margin: 4 auto ">图3：模型的ROC曲线</span>
+</div>
+
+<blockquote id="fn_2">
+<sup>2</sup>. 图片来自参考文献[1]中章节2 “模型评估”。<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#8617;</a>
+</blockquote>
 <h3 id="什么时候用PR曲线，什么时候用ROC曲线？"><a href="#什么时候用PR曲线，什么时候用ROC曲线？" class="headerlink" title="什么时候用PR曲线，什么时候用ROC曲线？"></a>什么时候用PR曲线，什么时候用ROC曲线？</h3><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]: 诸葛越, 葫芦娃. 百面机器学习——算法工程师带你去面试[J]. 2018.</p>
 
     </div>
